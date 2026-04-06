@@ -76,7 +76,7 @@ test.describe('Module: Ratings & reviews', () => {
     await page.locator('#form-review').locator('button[type="submit"]').click();
     await page.locator('#rv-comment').fill('Second');
     await page.locator('#form-review').locator('button[type="submit"]').click();
-    await expect(page.locator('.msg-error')).toContainText(/already reviewed/i);
+    await expect(page.locator('.msg-error, .alert-danger, .error')).toContainText(/already reviewed/i);
   });
 
   test('TC-REV-07: Review list container renders', async ({ page }) => {
