@@ -1,33 +1,45 @@
-name: Playwright Tests
+name: Playwright Tests with Allure GH Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "gh-pages" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: rm -rf allure-results allure-report test-results
+      - run: npx playwright test
+      - name: Allure Report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        with:
+          allure_results: allure-results
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: allure-report
 
-      - name: Install dependencies
-        run: npm install
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
-      - name: Install Playwright Browsers
-        run: npx playwright install
-
-      - name: Run Tests
-        run: npx playwright test
-
-      - name: Install Allure
-        run: npm install -g allure-commandline
-
-      - name: Generate Allure Report
-        run: allure generate ./allure-results --clean

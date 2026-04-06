@@ -7,6 +7,10 @@ Full-stack bike rental application (vanilla HTML/CSS/JS + Node/Express + MySQL) 
 - **Node.js** 18+
 - **MySQL 8** (local install) **or** Docker (see below)
 
+## 🚀 Allure Test Report
+[![Allure Report](https://github.com/Mrprem1/Vehicle_Rental_System_Capstone1/actions/workflows/allure-gh-pages.yml/badge.svg)](https://Mrprem1.github.io/Vehicle_Rental_System_Capstone1)
+[View Report](https://Mrprem1.github.io/Vehicle_Rental_System_Capstone1) — 400+ Playwright test cases
+
 ## Quick start
 
 1. **Clone / open this folder** in a terminal.

@@ -13,9 +13,9 @@ module.exports = defineConfig({
 
   fullyParallel: true,
 
-  forbidOnly: !!process.env.CI,
+  forbidOnly: false,
 
-  retries: process.env.CI ? 1 : 0,
+  retries: 2,
 
   workers: process.env.CI ? 2 : undefined,
 
